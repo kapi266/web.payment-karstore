@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway - DANA, Gopay, OVO, QRIS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --dana: #1084d4;
+            --gopay: #00aae5;
+            --ovo: #4c2a86;
+            --qris: #ff6b00;
+            --bg: #f8f9fa;
+            --card: #ffffff;
+            --text: #333333;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--card);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px var(--shadow);
+            overflow: hidden;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .header {
+            background: linear-gradient(to right, var(--primary), #5e72e4);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .payment-methods {
+            padding: 30px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .payment-card {
+            background: var(--bg);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #eee;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px var(--shadow);
+        }
+
+        .payment-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-right: 20px;
+            color: white;
+        }
+
+        .dana .payment-icon {
+            background: var(--dana);
+        }
+
+        .gopay .payment-icon {
+            background: var(--gopay);
+        }
+
+        .ovo .payment-icon {
+            background: var(--ovo);
+        }
+
+        .qris .payment-icon {
+            background: var(--qris);
+        }
+
+        .payment-info {
+            flex: 1;
+        }
+
+        .payment-info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .payment-info p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .payment-number {
+            font-family: monospace;
+            font-size: 16px;
+            background: #eee;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-top: 8px;
+            display: inline-block;
+        }
+
+        .qris-image {
+            width: 100%;
+            max-width: 250px;
+            margin: 15px auto;
+            display: block;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .qris-image:hover {
+            transform: scale(1.03);
+        }
+
+        .channel {
+            background: linear-gradient(to right, #25D366, #128C7E);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .channel a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            transition: background 0.3s ease;
+        }
+
+        .channel a:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+        }
+
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #3251d4;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .payment-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .payment-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Payment Gateway</h1>
+            <p>Pilih metode pembayaran yang Anda inginkan</p>
+        </div>
+        
+        <div class="payment-methods">
+            <h2 class="section-title">Metode Pembayaran</h2>
+            
+            <div class="payment-card dana">
+                <div class="payment-icon">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <div class="payment-info">
+                    <h3>DANA</h3>
+                    <p>Transfer ke nomor DANA berikut:</p>
+                    <span class="payment-number">082172777855</span>
+                    <button class="copy-btn" onclick="copyToClipboard('082172777855', 'DANA')">Salin</button>
+                </div>
+            </div>
+            
+            <div class="payment-card gopay">
+                <div class="payment-icon">
+                    <i class="fab fa-google-wallet"></i>
+                </div>
+                <div class="payment-info">
+                    <h3>Gopay</h3>
+                    <p>Transfer ke nomor Gopay berikut:</p>
+                    <span class="payment-number">083187841507</span>
+                    <button class="copy-btn" onclick="copyToClipboard('083187841507', 'Gopay')">Salin</button>
+                </div>
+            </div>
+            
+            <div class="payment-card ovo">
+                <div class="payment-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <div class="payment-info">
+                    <h3>OVO</h3>
+                    <p>Transfer melalui QRIS saja</p>
+                </div>
+            </div>
+            
+            <div class="payment-card qris">
+                <div class="payment-icon">
+                    <i class="fas fa-qrcode"></i>
+                </div>
+                <div class="payment-info">
+                    <h3>QRIS</h3>
+                    <p>Scan QR code berikut untuk pembayaran:</p>
+                    <img src="https://files.catbox.moe/x62w86.jpg" alt="QRIS Payment" class="qris-image">
+                </div>
+            </div>
+            
+            <div class="channel">
+                <h3><i class="fab fa-whatsapp"></i> Saluran Informasi</h3>
+                <p>Untuk konfirmasi pembayaran atau informasi lebih lanjut, kunjungi saluran WhatsApp kami:</p>
+                <a href="https://whatsapp.com/channel/0029Vb9Hl2OHFxPA7NEL492C" target="_blank">
+                    <i class="fab fa-whatsapp"></i> WhatsApp Channel
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2023 Payment Gateway. Semua hak dilindungi.</p>
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard(text, method) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert(`${method} nomor berhasil disalin: ${text}`);
+            }).catch(err => {
+                console.error('Gagal menyalin teks: ', err);
+            });
+        }
+        
+        // Animasi tambahan untuk efek smooth
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.payment-card');
+            cards.forEach((card, index) => {
+                card.style.animation = `fadeIn 0.5s ease forwards ${index * 0.2}s`;
+            });
+        });
+    </script>
+</body>
+</html>
